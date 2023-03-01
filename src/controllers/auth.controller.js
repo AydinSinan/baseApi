@@ -50,7 +50,13 @@ const register = async (req, res) => {
         });
 };
 
+const me = async(req, res, next) => {
+    console.log(req.user)
+    return new Response(req.user).success(res)
+}
+
 module.exports = {
     login,
     register,
+    me
 };
