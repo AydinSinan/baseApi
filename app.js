@@ -1,5 +1,7 @@
 require("express-async-errors") // ilk satırda olmalı! API patlamadı bu sayede!
 const express = require("express")
+const mongoSanitize = require('express-mongo-sanitize');
+
 const app = express()
 require("dotenv").config() // .env dosyasına erişim için
 require("./src/db/dbConnection")
@@ -11,7 +13,11 @@ const PORT = process.env.PORT || 5001;
 // Middlewares
 app.use(express.json()) // post içerisindeki req.body okuyabilmek için
 app.use(express.urlencoded({extended: true}))
-
+app.use(
+    mongoSanitize({
+      replaceWith: '_',
+    }),
+);
 
 app.use("/api", router)  // yönlendirmeler middleware'in altında
 
@@ -25,5 +31,5 @@ app.get("/", (req, res) => {
 app.use(errorHandlerMiddleware)
 
 app.listen(PORT, () => {
-    console.log(`Server ${PORT} porundan çalışıyor...`)
+    console.log(`Server ${PORT} portundan çalışıyor...`)
 })
