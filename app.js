@@ -1,12 +1,13 @@
 require("express-async-errors") // ilk satırda olmalı! API patlamadı bu sayede!
 const express = require("express")
+const path = require("path")
 const mongoSanitize = require('express-mongo-sanitize');
 
 const app = express()
 require("dotenv").config() // .env dosyasına erişim için
 require("./src/db/dbConnection")
 const router = require("./src/routes") // middleware'in üzerinde bulunmalı!
-const errorHandlerMiddleware = require("./src/middlewares/errorHandler")
+const errorHandlerMiddleware = require("./src/middlewares/errorHandler");
 const PORT = process.env.PORT || 5001;
 
 
@@ -18,6 +19,8 @@ app.use(
       replaceWith: '_',
     }),
 );
+app.use(express.static(path.join(__dirname, "public")))
+app.use("/uploads", express.static(__dirname))
 
 app.use("/api", router)  // yönlendirmeler middleware'in altında
 
