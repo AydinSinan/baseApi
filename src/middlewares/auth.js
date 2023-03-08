@@ -29,7 +29,7 @@ const tokenCheck = async(req, res, next) => {
 
     const token = req.headers.authorization.split(" ")[1]
 
-    console.log(token)
+    //console.log(token)
 
     await jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
         if(err)

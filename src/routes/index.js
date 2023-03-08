@@ -14,8 +14,6 @@ router.post("/upload", (req, res) => {
         else if(err)
             throw new APIError("Resim yüklenirken hata oluştu.", err)
         else return new Response(req.savedImages, "Yükleme başarıyla gerçekleşti").success(res)
-
-
     })
 })
 

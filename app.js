@@ -8,12 +8,16 @@ require("dotenv").config() // .env dosyasına erişim için
 require("./src/db/dbConnection")
 const router = require("./src/routes") // middleware'in üzerinde bulunmalı!
 const errorHandlerMiddleware = require("./src/middlewares/errorHandler");
+const apiLimiter = require("./src/middlewares/rateLimit");
 const PORT = process.env.PORT || 5001;
 
 
 // Middlewares
 app.use(express.json()) // post içerisindeki req.body okuyabilmek için
 app.use(express.urlencoded({extended: true}))
+
+app.use("/api", apiLimiter) // api ile başlayan rotalarda bu kontrol yapılacak
+
 app.use(
     mongoSanitize({
       replaceWith: '_',

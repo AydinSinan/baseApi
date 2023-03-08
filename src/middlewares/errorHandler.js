@@ -16,6 +16,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
         success: false,
         message: "Check your API."
     })
+    next()
 }
 
 module.exports = errorHandlerMiddleware 
